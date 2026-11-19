@@ -6,6 +6,14 @@ import {
 } from "@/common/api.service";
 import { useHomeStore } from "./home";
 
+// The article in the store also holds fields the API owns (slug, author,
+// dates, favorites). Send back only the fields a writer can change.
+const WRITABLE_FIELDS = ["title", "description", "body"];
+const writable = (article, extra = []) =>
+  Object.fromEntries(
+    [...WRITABLE_FIELDS, ...extra].map((key) => [key, article[key]])
+  );
+
 export const useArticleStore = defineStore("article", {
   state: () => ({
     article: {
@@ -54,10 +62,10 @@ export const useArticleStore = defineStore("article", {
       this.article = data.article;
     },
     publishArticle() {
-      return ArticlesService.create(this.article);
+      return ArticlesService.create(writable(this.article, ["tagList"]));
     },
     editArticle() {
-      return ArticlesService.update(this.article.slug, this.article);
+      return ArticlesService.update(this.article.slug, writable(this.article));
     },
     deleteArticle(slug) {
       return ArticlesService.destroy(slug);

@@ -23,6 +23,7 @@
 import { computed, onMounted, watch } from "vue";
 import { storeToRefs } from "pinia";
 import { useHomeStore } from "@/store/home";
+import { pageOffset, pageNumbers } from "@/common/paging";
 import RwvArticlePreview from "./VArticlePreview";
 import VPagination from "./VPagination";
 
@@ -65,7 +66,7 @@ const page = computed(() => (props.currentPage > 0 ? props.currentPage : 1));
 
 const listConfig = computed(() => {
   const filters = {
-    offset: (page.value - 1) * props.itemsPerPage,
+    offset: pageOffset(page.value, props.itemsPerPage),
     limit: props.itemsPerPage
   };
   if (props.author) filters.author = props.author;
@@ -74,14 +75,9 @@ const listConfig = computed(() => {
   return { type: props.type, filters };
 });
 
-const pages = computed(() => {
-  if (isLoading.value || articlesCount.value <= props.itemsPerPage) {
-    return [];
-  }
-  return [
-    ...Array(Math.ceil(articlesCount.value / props.itemsPerPage)).keys()
-  ].map((e) => e + 1);
-});
+const pages = computed(() =>
+  isLoading.value ? [] : pageNumbers(articlesCount.value, props.itemsPerPage)
+);
 
 const fetchArticles = () => {
   // A failed load leaves the list in its loading state; the error-handling
