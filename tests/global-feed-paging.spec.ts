@@ -43,7 +43,7 @@ for (const [path, pageNo] of [['/', 1], ['/?page=2', 2], ['/?page=3', 3]] as con
     expect(offsets).toContain(expectedOffset);
     expect(offsets.every((o) => o === expectedOffset)).toBe(true);
     for (const n of [1, 2, 3]) {
-      await expect(page.locator(`[data-test="page-link-${n}"]`)).toBeVisible();
+      await expect(page.locator(`[data-test="page-link-${n}"] .page-link`)).toBeVisible();
     }
     await expect(page.locator('[data-test="page-link-4"]')).toHaveCount(0);
   });
