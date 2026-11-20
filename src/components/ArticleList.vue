@@ -64,9 +64,11 @@ const { articlesCount, isLoading, articles } = storeToRefs(homeStore);
 
 const page = computed(() => (props.currentPage > 0 ? props.currentPage : 1));
 
+// SPEC: spec-572c28
+// `page` counts from 1; pageOffset takes a page index counted from 0.
 const listConfig = computed(() => {
   const filters = {
-    offset: pageOffset(page.value, props.itemsPerPage),
+    offset: pageOffset(page.value - 1, props.itemsPerPage),
     limit: props.itemsPerPage
   };
   if (props.author) filters.author = props.author;
