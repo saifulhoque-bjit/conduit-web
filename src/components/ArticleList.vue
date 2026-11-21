@@ -66,7 +66,8 @@ const page = computed(() => (props.currentPage > 0 ? props.currentPage : 1));
 
 const listConfig = computed(() => {
   const filters = {
-    offset: pageOffset(page.value, props.itemsPerPage),
+    // `page` is one-based; pageOffset takes a zero-based page index.
+    offset: pageOffset(page.value - 1, props.itemsPerPage),
     limit: props.itemsPerPage
   };
   if (props.author) filters.author = props.author;
