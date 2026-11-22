@@ -1,12 +1,12 @@
 /**
  * Number of items that come before a page.
  *
- * @param {number} pageIndex zero-based index of the page
+ * @param {number} page page number, starting at 1 as in ?page and the page links
  * @param {number} pageSize items on each page
  * @returns {number} the offset to request from the API
  */
-export const pageOffset = (pageIndex, pageSize) =>
-  Math.max(pageIndex, 0) * pageSize;
+// SPEC: spec-2bb353 -- page 1 requests offset 0: offset = (page - 1) * pageSize.
+export const pageOffset = (page, pageSize) => Math.max(page - 1, 0) * pageSize;
 
 /**
  * Page numbers to show for a total, starting at 1.
