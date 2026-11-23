@@ -14,6 +14,8 @@
       </router-link>
       <span v-else class="author"></span>
       <span class="date">{{ formatDate(article.createdAt) }}</span>
+      <!-- SPEC: spec-aabc69 -->
+      <span v-if="readingTime" class="reading-time">{{ readingTime }}</span>
     </div>
     <RwvArticleActions
       v-if="actions"
@@ -41,7 +43,7 @@ import { storeToRefs } from "pinia";
 import { useRouter } from "vue-router";
 import { useAuthStore } from "@/store/auth";
 import { useArticleStore } from "@/store/article";
-import { formatDate } from "@/common/format";
+import { formatDate, formatReadingTime } from "@/common/format";
 import RwvArticleActions from "@/components/ArticleActions";
 
 const props = defineProps({
@@ -64,6 +66,11 @@ const authorImage = computed(() =>
   props.article.author && props.article.author.image
     ? props.article.author.image
     : "/default-avatar.svg"
+);
+
+// SPEC: spec-aabc69
+const readingTime = computed(() =>
+  formatReadingTime(props.article.readingTimeMinutes)
 );
 
 const authorProfileLink = computed(() => {

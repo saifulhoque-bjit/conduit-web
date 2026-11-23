@@ -10,6 +10,14 @@ export const formatDate = (date) => {
   return format(parsed, "MMMM d, yyyy");
 };
 
+// SPEC: spec-aabc69
+// "N min read" from an article's readingTimeMinutes; empty when it has none
+// (an article preview from a list, or an article that failed to load).
+export const formatReadingTime = (minutes) => {
+  if (!Number.isInteger(minutes)) return "";
+  return `${minutes} min read`;
+};
+
 export const formatError = (errorValue) => {
   return `${errorValue[0]}`;
 };

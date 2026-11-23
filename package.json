@@ -30,7 +30,8 @@
     "serve": "vite",
     "test": "playwright test",
     "test:e2e": "playwright test --grep-invert @security",
-    "test:e2e:security": "playwright test --grep @security"
+    "test:e2e:security": "playwright test --grep @security",
+    "test:unit": "node --test \"tests/unit/*.test.mjs\""
   },
   "version": "0.1.0"
 }
