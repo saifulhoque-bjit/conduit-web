@@ -14,6 +14,9 @@
       </router-link>
       <span v-else class="author"></span>
       <span class="date">{{ formatDate(article.createdAt) }}</span>
+      <span v-if="actions && wordCount" class="word-count">{{
+        wordCount
+      }}</span>
     </div>
     <RwvArticleActions
       v-if="actions"
@@ -41,7 +44,7 @@ import { storeToRefs } from "pinia";
 import { useRouter } from "vue-router";
 import { useAuthStore } from "@/store/auth";
 import { useArticleStore } from "@/store/article";
-import { formatDate } from "@/common/format";
+import { formatDate, formatWordCount } from "@/common/format";
 import RwvArticleActions from "@/components/ArticleActions";
 
 const props = defineProps({
@@ -65,6 +68,9 @@ const authorImage = computed(() =>
     ? props.article.author.image
     : "/default-avatar.svg"
 );
+
+// Only the article page (actions) shows the count; previews do not.
+const wordCount = computed(() => formatWordCount(props.article.wordCount));
 
 const authorProfileLink = computed(() => {
   const username = props.article.author && props.article.author.username;
