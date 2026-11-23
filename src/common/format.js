@@ -10,6 +10,12 @@ export const formatDate = (date) => {
   return format(parsed, "MMMM d, yyyy");
 };
 
+// The API's wordCount as "N words"; empty when the article has no count yet.
+export const formatWordCount = (count) => {
+  if (!Number.isInteger(count) || count < 0) return "";
+  return `${count} words`;
+};
+
 export const formatError = (errorValue) => {
   return `${errorValue[0]}`;
 };
