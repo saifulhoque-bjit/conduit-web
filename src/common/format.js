@@ -13,7 +13,7 @@ export const formatDate = (date) => {
 // The API's wordCount as "N words"; empty when the article has no count yet.
 export const formatWordCount = (count) => {
   if (!Number.isInteger(count) || count < 0) return "";
-  return count === 1 ? "1 word" : `${count} words`;
+  return `${count} words`;
 };
 
 export const formatError = (errorValue) => {
